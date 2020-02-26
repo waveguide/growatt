@@ -236,7 +236,9 @@ while True:
         if last_inverter_state != data['inverter_state']:
             # Publish a message with the retain flag when the inverter status
             # changes.
-            state = {"state": f"{InverterState(data['inverter_state']).name}"}
+            state = {
+                "state": f"{InverterState(data['inverter_state']).name}",
+                "dt_now_local": datetime.now().strftime("%Y-%m-%d %H:%M:%S")}
             mqtt_client.publish(config.MQTT_TOPIC + '/state',
                                 json.dumps(state),
                                 retain=True)
